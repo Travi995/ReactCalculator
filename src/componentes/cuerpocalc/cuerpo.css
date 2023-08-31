@@ -1,0 +1,35 @@
+:root{
+    --widthcalc: 250px;
+    --widthbtn: calc(var(--widthcalc) / 6);
+}
+
+.cuerpo{
+    width: 100%;
+    height: 550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: cadetblue;
+}
+
+#calculadora{
+    width: var(--widthcalc) !important;
+    height: calc(var(--widthcalc) + 14px);
+    border: 1px solid rgb(240, 232, 232);
+    border-radius: 10px;
+    background-color:darkgrey;
+    padding: 5px;
+}
+
+.Conjbtns{
+    width: calc(var(--widthcalc) - 5px);
+    height: calc(var(--widthcalc) - 28px);
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+    padding-left: 5px;
+    padding-top: 5px;
+    border-radius: 10px;
+    background-color: rgb(149, 148, 147);
+}
