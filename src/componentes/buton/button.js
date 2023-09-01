@@ -1,9 +1,9 @@
+import { Historial, guardaroperacion } from '../historial/historial'
 import './button.css'
 
 let resultado = '0'
-
-
-let operacion = ''
+let btnOperacion = ''
+let operacion = {}
 
 export const Buttoncalc = ({ text }) => {
 
@@ -15,29 +15,48 @@ export const Buttoncalc = ({ text }) => {
 const handlerEvents = (arg) => {
     let elemento = arg.target
     let cajaTexto = document.getElementById('entrada')
-    
-
-
 
     if (isNaN(Number(elemento.value))) {
-        if (resultado === '0') {
-            resultado = document.getElementById('entrada').value
-        }
-        
-        if (elemento.value === 'AC') {
-            cajaTexto.value = '0'
-            resultado ='0'
-        }
-
-        if (elemento.value !== '=') {
-            operacion = elemento.value
-            cajaTexto.value = ''
+        switch (elemento.value) {
+            case 'AC':
+                cajaTexto.value = '0'
+                resultado = '0'
+                operacion = {}
+                break;
             
-            return
-        }
-    }
+            case 'HL':
+                
+                console.log('el historial se esta ejecutando')
+                return    
+            
+                break;
 
-    else if (typeof (Number(elemento.value)) === 'number') {
+            default:
+                
+                
+
+                if (resultado === '0') {
+                    resultado = document.getElementById('entrada').value
+                    operacion.firstElement = resultado
+                }
+
+                if (elemento.value !== '=') {
+                    
+                    console.log('el elemento guardado en btnOperacion es :' +elemento.value)
+                    btnOperacion = elemento.value
+                    operacion.operation = btnOperacion
+                    cajaTexto.value = ''
+        
+                    return
+                } else {
+        
+                    operacion.secondElement = cajaTexto.value
+                }
+                
+                break;
+        }
+    
+    } else if (typeof (Number(elemento.value)) === 'number') {
         if (cajaTexto.value === '0') {
             cajaTexto.value = elemento.value
         } else {
@@ -46,47 +65,89 @@ const handlerEvents = (arg) => {
         }
     }
 
+    /* if (isNaN(Number(elemento.value))) {
+         if (resultado === '0') {
+             resultado = document.getElementById('entrada').value
+             operacion.firstElement = resultado
+         }
+ 
+         if (elemento.value === 'AC') {
+             cajaTexto.value = '0'
+             resultado = '0'
+             operacion = {}
+         }
+ 
+         if (elemento.value !== '=') {
+             btnOperacion = elemento.value
+             operacion.operation = btnOperacion
+             cajaTexto.value = ''
+ 
+             return
+         } else {
+ 
+             operacion.secondElement = cajaTexto.value
+         }
+     }
+ 
+     else if (typeof (Number(elemento.value)) === 'number') {
+         if (cajaTexto.value === '0') {
+             cajaTexto.value = elemento.value
+         } else {
+             cajaTexto.value += elemento.value
+             return
+         }
+     }
+ 
+     */
+
     
-    switch (operacion) {
+    console.log( resultado + ' ' + cajaTexto.value + ' ' + btnOperacion)
+    switch (btnOperacion) {
         case '+':
-            console.log(resultado)
-            cajaTexto.value = Number(resultado) + Number(cajaTexto.value)
+            alert('el case + se esta ejecutando')
+            operacion.result = Number(resultado) + Number(cajaTexto.value)
+            cajaTexto.value = operacion.result
+
+            guardaroperacion(operacion)
             resultado = '0'
             break;
-        
+
         case '-':
-            cajaTexto.value = Number(resultado) - Number(cajaTexto.value)
-            resultado ='0'
+            operacion.result = Number(resultado) - Number(cajaTexto.value)
+            cajaTexto.value = operacion.result
+            guardaroperacion(operacion)
+            resultado = '0'
             break;
-        
+
         case '*':
-            cajaTexto.value = Number(resultado) * Number(cajaTexto.value)
-            resultado ='0'
+            operacion.result = Number(resultado) * Number(cajaTexto.value)
+            cajaTexto.value = operacion.result
+            guardaroperacion(operacion)
+            resultado = '0'
             break;
-        
+
         case '/':
-            cajaTexto.value = Number(resultado) / Number(cajaTexto.value)
-            resultado ='0'
+            operacion.result = Number(resultado) / Number(cajaTexto.value)
+            cajaTexto.value = operacion.result
+            guardaroperacion(operacion)
+            resultado = '0'
             break;
         case '%':
-            cajaTexto.value = Number(resultado) % Number(cajaTexto.value)
-            resultado ='0'
+            operacion.result = Number(resultado) % Number(cajaTexto.value)
+            cajaTexto.value = operacion.result
+            guardaroperacion(operacion)
+            resultado = '0'
             break;
-        
+
         case ',':
             cajaTexto.value += ','
-            
+
             break;
-        
-
-
-
-
-
+    
         default:
-            console.log('no hay operacion k ejecutar')
+            console.log('no hay Operacion k ejecutar')
             break;
     }
-    
+
 
 }
